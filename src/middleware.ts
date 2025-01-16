@@ -20,7 +20,7 @@ const url = request.nextUrl;
 
 
 if (
- token && token.user &&
+ token &&
 (url.pathname.startsWith('/sign-in') ||
 
 url.pathname.startsWith('/sign-up') ||
