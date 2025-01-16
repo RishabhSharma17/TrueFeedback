@@ -55,7 +55,7 @@ export async function POST(req:Request){
 
 }
 
-export async function GET(request: Request) {
+export async function GET() {
     // Connect to the database
     await dbConnect();
   

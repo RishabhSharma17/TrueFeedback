@@ -14,10 +14,9 @@ import { User } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { Separator } from "@/components/ui/separator";
 
-export default function () {
+export default function Dashboard() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSwitchLoading, setIsSwitchLoading] = useState<boolean>(true);

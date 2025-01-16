@@ -13,9 +13,9 @@ function Navbar() {
   return (
     <nav className=''>
       <div className='p-4 shadow-md flex justify-between'>
-        <a href="/" className=' text-center text-2xl font-bold ml-7 my-1'>
+        <Link href="/" className=' text-center text-2xl font-bold ml-7 my-1'>
           TrueFeedback
-        </a>
+        </Link>
         <div className='flex gap-10'>
           <Link href='/' className='text-lg mt-2'>
           Home

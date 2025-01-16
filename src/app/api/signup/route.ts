@@ -23,7 +23,7 @@ export async function POST(req:Request) {
             });
         }
 
-        let verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
 
         const ExistingUserByemail = await UserModel.findOne({email});
 

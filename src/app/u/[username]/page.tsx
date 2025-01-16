@@ -10,12 +10,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
 import { Loader2 } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as z from 'zod';
 import Navbar from "@/components/Navbar";
 
-export default function () {
+export default function Udashboard() {
     const [messages,setMessages] = useState<string[]>([]);
     const [isSubmiting,setIsSubmiting] = useState<boolean>(false);
     const [isLoading,setIsLoading] = useState(false);
@@ -52,11 +52,7 @@ export default function () {
         }
     }
 
-    useEffect(()=>{
-        Reloadmessages();
-    },[])
-
-    const Reloadmessages = async () => {
+    const Reloadmessages = useCallback(async () => {
         setIsLoading(true);
         try {
             const response = await axios.get(`/api/suggestMessages`);
@@ -75,7 +71,12 @@ export default function () {
             setIsLoading(false);
             console.log(messages);
         }
-    }
+    },[toast]);
+
+    useEffect(()=>{
+        Reloadmessages();
+    },[Reloadmessages])
+
 
     const sendMessage = async (event : React.MouseEvent<HTMLDivElement>) => {
         const content = (event.target as HTMLDivElement).innerText;

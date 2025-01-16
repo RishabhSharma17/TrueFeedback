@@ -11,7 +11,7 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function () {
+export default function VerifyAccount() {
     const {toast} = useToast();
     const router = useRouter();
     const params = useParams();
@@ -24,7 +24,7 @@ export default function () {
 
     const onSubmit = async (data: z.infer<typeof verifySchema>) => {
         try {
-            const response = await axios.post<ApiResponse>(`/api/verifyCode`,{
+            await axios.post<ApiResponse>(`/api/verifyCode`,{
                 username: params.username,
                 code:data.code
             })
