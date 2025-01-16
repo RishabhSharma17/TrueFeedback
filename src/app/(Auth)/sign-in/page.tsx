@@ -51,7 +51,7 @@ export default function SignInForm() {
         })
     }
     setIsSubmitting(false);
-    if(result?.ok){
+    if (result?.url) {
       router.replace('/dashboard');
     }
   };
