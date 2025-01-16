@@ -47,8 +47,24 @@ export default function Home() {
           </CarouselContent>
         </Carousel>
       </main>
-      <footer className="text-center py-8 md:p-6 bg-gray-900 text-white">
-        © 2024 True Feedback. All rights reserved.
+      <footer className="bg-gray-900 text-white py-8 md:p-12 mt-auto">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col items-center md:flex-row md:justify-between md:space-x-6">
+            <div className="text-center md:text-left">
+              <p className="text-sm">
+                © 2024 True Feedback. All rights reserved.
+              </p>
+            </div>
+            <div className="mt-4 md:mt-0 flex justify-center space-x-4">
+              <a href="#" className="text-sm hover:text-gray-400">Privacy Policy</a>
+              <a href="#" className="text-sm hover:text-gray-400">Terms of Service</a>
+              <a href="#" className="text-sm hover:text-gray-400">Contact Us</a>
+            </div>
+          </div>
+          <div className="mt-6 text-center text-sm text-gray-500">
+            <p>Made with ❤️ by the True Feedback Team</p>
+          </div>
+        </div>
       </footer>
     </div>
   );
