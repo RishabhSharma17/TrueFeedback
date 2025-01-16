@@ -24,7 +24,6 @@ export default function Dashboard() {
 
     const { data: session } = useSession();
 
-    // Ensure hooks are always called
     const form = useForm({
         resolver: zodResolver(acceptMessageSchema),
     });
@@ -39,12 +38,12 @@ export default function Dashboard() {
             setValue("acceptMessages", response.data.isAcceptingMessages);
         } catch (error) {
             const axioserror = error as AxiosError<ApiResponse>;
-            console.log(axioserror);
+            console.error(axioserror);
             toast({
-                title:"Error",
+                title: "Error",
                 description:
-          axioserror?.response?.data.message ??
-          'Failed to fetch message settings',
+                    axioserror?.response?.data?.message ??
+                    "Failed to fetch message settings",
                 variant: "destructive",
             });
         } finally {
@@ -55,30 +54,30 @@ export default function Dashboard() {
     const fetchMessages = useCallback(
         async (refresh: boolean = false) => {
             setIsLoading(true);
-            setIsSwitchLoading(false);
             try {
                 const response = await axios.get("/api/getMessages");
                 setMessages(response.data?.data);
                 if (refresh) {
                     toast({
-                        title: 'Refreshed Messages',
-                        description: 'Showing latest messages',
+                        title: "Refreshed Messages",
+                        description: "Showing latest messages",
                     });
                 }
             } catch (error) {
                 const axioserror = error as AxiosError<ApiResponse>;
-                console.log(axioserror);
+                console.error(axioserror);
                 toast({
                     title: "Error",
-                    description: axioserror?.response?.data.message||"Failed to fetch message settings",
+                    description:
+                        axioserror?.response?.data?.message ||
+                        "Failed to fetch messages",
                     variant: "destructive",
                 });
             } finally {
                 setIsLoading(false);
-                setIsSwitchLoading(false);
             }
         },
-        [setIsLoading, setMessages, toast]
+        [toast]
     );
 
     useEffect(() => {
@@ -100,7 +99,7 @@ export default function Dashboard() {
             });
         } catch (error) {
             const axioserror = error as AxiosError;
-            console.log(axioserror);
+            console.error(axioserror);
             toast({
                 title: "Error",
                 description: "Failed to update message settings",
@@ -114,34 +113,47 @@ export default function Dashboard() {
     };
 
     const username = (session?.user as User)?.username;
-    const baseUrl = `${window.location.protocol}//${window.location.host}`;
-    const profileUrl = `${baseUrl}/u/${username}`;
+    const [profileUrl, setProfileUrl] = useState("");
+
+    // Calculate profile URL on the client
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const baseUrl = `${window.location.protocol}//${window.location.host}`;
+            setProfileUrl(`${baseUrl}/u/${username}`);
+        }
+    }, [username]);
 
     const copyToClipboard = () => {
-      navigator.clipboard.writeText(profileUrl)
-          .then(() => {
-              toast({
-                  title: 'URL Copied!',
-                  description: 'Profile URL has been copied to clipboard.',
-              });
-          })
-          .catch((error) => {
-              console.log('Failed to copy text: ', error);
-              toast({
-                  title: 'Error',
-                  description: 'Failed to copy profile URL.',
-                  variant: 'destructive',
-              });
-          });
-  };
+        if (typeof window !== "undefined") {
+            navigator.clipboard
+                .writeText(profileUrl)
+                .then(() => {
+                    toast({
+                        title: "URL Copied!",
+                        description: "Profile URL has been copied to clipboard.",
+                    });
+                })
+                .catch((error) => {
+                    console.error("Failed to copy text: ", error);
+                    toast({
+                        title: "Error",
+                        description: "Failed to copy profile URL.",
+                        variant: "destructive",
+                    });
+                });
+        }
+    };
 
-    // Render login message if session is missing
     if (!session) {
-        return <p className="flex justify-center h-screen text-xl items-center"> You are not logged in.</p>;
+        return (
+            <p className="flex justify-center h-screen text-xl items-center">
+                You are not logged in.
+            </p>
+        );
     }
 
-    if(!messages){
-      return <Loader2 />
+    if (isLoading) {
+        return <Loader2 className="animate-spin mx-auto" />;
     }
 
     return (
@@ -177,10 +189,7 @@ export default function Dashboard() {
             <Button
                 className="mt-4 mb-2"
                 variant="outline"
-                onClick={(e) => {
-                    e.preventDefault();
-                    fetchMessages(true);
-                }}
+                onClick={() => fetchMessages(true)}
             >
                 {isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
