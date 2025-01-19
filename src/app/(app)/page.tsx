@@ -47,7 +47,7 @@ export default function Home() {
           </CarouselContent>
         </Carousel>
       </main>
-      <footer className="bg-gray-900 text-white py-8 md:p-12 mt-auto">
+      <footer className="bg-gray-900 text-white p-4 md:p-6 ">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col items-center md:flex-row md:justify-between md:space-x-6">
             <div className="text-center md:text-left">

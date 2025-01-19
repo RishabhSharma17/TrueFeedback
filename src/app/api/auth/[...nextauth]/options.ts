@@ -14,7 +14,6 @@ export const next_Options : NextAuthOptions = {
                 password: { label: 'Password', type: 'password' }
             },
             async authorize(credentails:any) : Promise<any> {
-                console.log("Signin button");
                 await dbConnect();
                 try{
                     const user = await UserModel.findOne({

@@ -69,7 +69,7 @@ export default function SignInForm() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <FormField
               name="identifier"
-              control={control}
+              control={form.control}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
@@ -80,7 +80,7 @@ export default function SignInForm() {
             />
             <FormField
               name="password"
-              control={control}
+              control={form.control}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
