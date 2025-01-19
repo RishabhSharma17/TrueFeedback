@@ -55,7 +55,7 @@ export default function Home() {
           <p className="text-base md:text-lg">© 2024 True Feedback. All rights reserved.</p>
         </div>
         {/* Middle Section */}
-        <div className="w-full md:w-1/3">
+        <div className="w-full text-center md:w-1/3">
           <p className="text-base md:text-lg text-gray-400">Made by Rishabh Sharma</p>
         </div>
         {/* Right Section */}
