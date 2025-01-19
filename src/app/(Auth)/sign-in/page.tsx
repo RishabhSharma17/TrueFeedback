@@ -51,9 +51,7 @@ export default function SignInForm() {
         })
     }
     setIsSubmitting(false);
-    if (result?.url) {
       router.replace('/dashboard');
-    }
   };
 
   return (
