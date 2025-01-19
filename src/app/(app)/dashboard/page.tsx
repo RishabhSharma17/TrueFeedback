@@ -153,7 +153,7 @@ export default function Dashboard() {
     }
 
     if (isLoading) {
-        return <Loader2 className="animate-spin mx-auto" />;
+        return <Loader2 className="animate-spin my-auto mx-auto" />;
     }
 
     return (

@@ -2,17 +2,17 @@ import UserModel from '@/model/user';
 import { getServerSession } from 'next-auth/next';
 import { dbConnect } from '@/lib/dbConnected';
 import { User } from 'next-auth';
-import { next_Options } from '../../auth/[...nextauth]/options';
-
+import { next_Options } from '../auth/[...nextauth]/options';
 import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { messageId: string } }
+  request: NextRequest
 ) {
-  const { messageId } = params;
 
+  const body = await request.json();
+
+  const messageId = body?.messageId;
   if (!mongoose.Types.ObjectId.isValid(messageId)) {
     return NextResponse.json(
       { success: false, message: 'Invalid message ID format' },
