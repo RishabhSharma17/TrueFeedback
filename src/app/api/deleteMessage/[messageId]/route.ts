@@ -5,17 +5,25 @@ import { User } from 'next-auth';
 import { next_Options } from '../../auth/[...nextauth]/options';
 
 import { NextRequest, NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 
 export async function DELETE(
   request: NextRequest,
-  context: { params: any } // Explicitly typed context to ensure compatibility
+  { params }: { params: { messageId: string } }
 ) {
-  const { params } = context;
-  const messageId = params.messageId; // Access the messageId parameter
+  const { messageId } = params;
+
+  if (!mongoose.Types.ObjectId.isValid(messageId)) {
+    return NextResponse.json(
+      { success: false, message: 'Invalid message ID format' },
+      { status: 400 }
+    );
+  }
+
   await dbConnect();
 
   const session = await getServerSession(next_Options);
-  const user = session?.user as User;
+  const user: User = session?.user as User;
 
   if (!session || !user) {
     return NextResponse.json(
@@ -32,19 +40,19 @@ export async function DELETE(
 
     if (updateResult.modifiedCount === 0) {
       return NextResponse.json(
-        { message: 'Message not found or already deleted', success: false },
+        { success: false, message: 'Message not found or already deleted' },
         { status: 404 }
       );
     }
 
     return NextResponse.json(
-      { message: 'Message deleted', success: true },
+      { success: true, message: 'Message deleted successfully' },
       { status: 200 }
     );
   } catch (error) {
     console.error('Error deleting message:', error);
     return NextResponse.json(
-      { message: 'Error deleting message', success: false },
+      { success: false, message: 'Error deleting message' },
       { status: 500 }
     );
   }

@@ -79,7 +79,7 @@ export default function Dashboard() {
         },
         [toast]
     );
-
+    console.log(messages);
     useEffect(() => {
         if (session?.user) {
             fetchMessages();

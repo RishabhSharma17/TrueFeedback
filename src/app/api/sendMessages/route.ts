@@ -33,7 +33,7 @@ export async function POST(req:Request){
         };
 
         user.message.push(newMessage as Message);
-        await user.save()
+        await user.save();
 
         return Response.json({
             success: true,
