@@ -2,7 +2,7 @@
 import Autoplay from 'embla-carousel-autoplay';
 import { Mail } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import messages from '@/message.json';
+import messages from "../../messages.json";
 import {
   Carousel,
   CarouselContent,
